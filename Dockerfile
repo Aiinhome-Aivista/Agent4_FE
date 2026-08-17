@@ -16,7 +16,7 @@ RUN npm install
 COPY . .
 
 # API URL available during Vite build
-ARG VITE_API_BASE_URL=http://187.127.163.17:3020
+ARG VITE_API_BASE_URL=http://187.127.163.17:3024
 ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 
 # Build production application
