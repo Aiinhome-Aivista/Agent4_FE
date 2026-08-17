@@ -5,18 +5,13 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Install dependencies
-# COPY package.json package-lock.json ./
-# RUN npm ci
-
 COPY package.json ./
 RUN npm install
 
-# Copy application source
 COPY . .
 
 # API URL available during Vite build
-ARG VITE_API_BASE_URL=http://187.127.163.17:3024
+ARG VITE_API_BASE_URL=http://187.127.163.17:3024/api
 ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 
 # Build production application
@@ -28,14 +23,11 @@ RUN npm run build
 # ============================================
 FROM nginx:alpine AS runner
 
-# Remove default Nginx content/config
 RUN rm -rf /usr/share/nginx/html/*
 RUN rm -f /etc/nginx/conf.d/default.conf
 
-# Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy Vite production build
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 80
