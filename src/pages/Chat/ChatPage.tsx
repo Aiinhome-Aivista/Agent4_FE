@@ -19,9 +19,9 @@ const now = () =>
   new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
 const RISK_COLOR: Record<string, string> = {
-  HIGH:   'bg-red-50 text-red-500 border-red-100',
-  MEDIUM: 'bg-amber-50 text-amber-500 border-amber-100',
-  LOW:    'bg-emerald-50 text-emerald-500 border-emerald-100',
+  HIGH:   'bg-red-500/10 text-red-500 border-red-500/20',
+  MEDIUM: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
+  LOW:    'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -252,27 +252,24 @@ export default function ChatPage() {
 
   // ─── Render ───────────────────────────────────────────────────────────────
   return (
-    <div
-      className="h-full flex overflow-hidden"
-      style={{ fontFamily: "'DM Sans', sans-serif", background: '#f8fafc' }}
-    >
+    <div className="h-full flex overflow-hidden font-display bg-background">
       {/* ── Left Sidebar — Incident List ──────────────────────────────────── */}
-      <div className="w-[380px] flex-shrink-0 bg-white border-r border-slate-100 flex flex-col">
+      <div className="w-[380px] flex-shrink-0 border-r border-border flex flex-col">
         {/* Filters */}
-        <div className="p-6 border-b border-slate-100">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-black uppercase tracking-widest text-slate-500">
+        <div className="px-6 py-4 border-b border-border">
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-sm font-black uppercase tracking-widest text-muted-foreground">
               Incidents
             </h2>
-            <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-xl text-xs font-bold">
+            <div className="flex items-center gap-2 bg-muted p-1 rounded-xl text-xs font-bold">
               {['OPEN', 'ALL', 'CLOSED'].map(f => (
                 <button
                   key={f}
                   onClick={() => setFilter(f)}
                   className={`px-3 py-1.5 rounded-lg transition-all ${
                     filter === f
-                      ? 'bg-slate-900 text-white'
-                      : 'text-slate-600 hover:text-slate-900'
+                      ? 'bg-foreground text-background'
+                      : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   {f}
@@ -282,17 +279,17 @@ export default function ChatPage() {
           </div>
 
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
             <input
               type="text"
               placeholder="Search incidents..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl text-sm font-medium outline-none border border-slate-200 focus:border-blue-500/50 transition-all bg-slate-50"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl text-sm font-medium outline-none border border-border focus:border-primary/50 transition-all bg-input text-foreground"
             />
           </div>
 
-          <div className="text-[10px] font-black text-slate-400 uppercase mt-4 tracking-widest">
+          <div className="text-[10px] font-black text-muted-foreground uppercase mt-4 tracking-widest">
             {filteredIncidents.length} Incidents
           </div>
         </div>
@@ -301,8 +298,8 @@ export default function ChatPage() {
         <div className="flex-1 overflow-y-auto">
           {loading ? (
             <div className="flex flex-col items-center justify-center h-64 gap-3">
-              <Loader2 size={24} className="animate-spin text-blue-600" />
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+              <Loader2 size={24} className="animate-spin text-primary" />
+              <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
                 Loading Stream...
               </p>
             </div>
@@ -325,38 +322,38 @@ export default function ChatPage() {
                     handleSelectIncident(inc)
                   }
                 }}
-                className={`p-5 border-b border-slate-50 cursor-pointer hover:bg-slate-50 transition-colors relative ${
-                  selectedIncident?.id === inc.id ? 'bg-blue-50/50' : ''
+                className={`p-5 border-b border-border cursor-pointer hover:bg-muted/50 transition-colors relative ${
+                  selectedIncident?.id === inc.id ? 'bg-primary/10' : ''
                 }`}
               >
                 {selectedIncident?.id === inc.id && (
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600" />
+                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
                 )}
                 <div className="flex items-start justify-between mb-1">
                   <div className="flex-1 min-w-0 pr-2">
-                    <p className="text-xs font-bold text-slate-500">{inc.source}</p>
-                    <h3 className="text-sm font-bold text-slate-900 mt-0.5 leading-snug">
+                    <p className="text-xs font-bold text-muted-foreground">{inc.source}</p>
+                    <h3 className="text-sm font-bold text-foreground mt-0.5 leading-snug">
                       {inc.title}
                     </h3>
                   </div>
                   <span
                     className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-md border flex-shrink-0 ${
-                      RISK_COLOR[inc.risk_level] || 'bg-slate-50 text-slate-400 border-slate-100'
+                      RISK_COLOR[inc.risk_level] || 'bg-muted text-muted-foreground border-border'
                     }`}
                   >
                     {inc.risk_level || '—'}
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 font-medium">
+                <p className="text-xs text-muted-foreground font-medium">
                   Risk Score: {inc.risk_score ? Number(inc.risk_score).toFixed(1) : '—'}
                 </p>
 
                 <div className="flex items-center justify-between mt-3">
-                  <span className="text-[10px] font-black uppercase px-2 py-1 rounded-lg bg-slate-200/50 text-slate-600">
+                  <span className="text-[10px] font-black uppercase px-2 py-1 rounded-lg bg-muted text-foreground">
                     {inc.status}
                   </span>
                   {selectedIncident?.id === inc.id && (
-                    <span className="flex items-center gap-1 text-[10px] font-black uppercase text-blue-600">
+                    <span className="flex items-center gap-1 text-[10px] font-black uppercase text-primary">
                       <Lock size={10} /> Locked
                     </span>
                   )}
@@ -367,19 +364,19 @@ export default function ChatPage() {
         </div>
 
         {/* Pagination */}
-        <div className="p-4 border-t border-slate-100 flex items-center justify-between bg-white shrink-0">
+        <div className="p-4 border-t border-border flex items-center justify-between shrink-0">
           <button
             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
             disabled={currentPage === 1 || loading}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               currentPage === 1 || loading
-                ? 'text-slate-400 cursor-not-allowed'
-                : 'text-slate-700 hover:bg-slate-50'
+                ? 'text-muted-foreground opacity-50 cursor-not-allowed'
+                : 'text-foreground hover:bg-muted'
             }`}
           >
             Prev
           </button>
-          <span className="text-xs font-bold text-slate-500">
+          <span className="text-xs font-bold text-muted-foreground">
             Page {currentPage} of {Math.max(1, Math.ceil(totalIncidents / 4))}
           </span>
           <button
@@ -387,8 +384,8 @@ export default function ChatPage() {
             disabled={currentPage * 4 >= totalIncidents || loading}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               currentPage * 4 >= totalIncidents || loading
-                ? 'text-slate-400 cursor-not-allowed'
-                : 'text-slate-700 hover:bg-slate-50'
+                ? 'text-muted-foreground opacity-50 cursor-not-allowed'
+                : 'text-foreground hover:bg-muted'
             }`}
           >
             Next
@@ -399,7 +396,7 @@ export default function ChatPage() {
       {/* ── Right Area — Chat ─────────────────────────────────────────────── */}
       <div className="flex-1 min-w-0 flex flex-col">
         {/* Header */}
-        <div className="bg-white p-6 border-b border-slate-100">
+        <div className="p-6 border-b border-border">
           {selectedIncident ? (
             <div>
               {/* Scope Lock Badge */}
@@ -421,18 +418,18 @@ export default function ChatPage() {
               </div> */}
 
               <div className="flex items-center justify-between mb-1">
-                <h2 className="text-xl font-extrabold text-slate-900 leading-tight">
+                <h2 className="text-xl font-extrabold text-foreground leading-tight">
                   {selectedIncident.title}
                 </h2>
               </div>
-              <p className="text-sm text-slate-600 font-medium">
+              <p className="text-sm text-muted-foreground font-medium">
                 {selectedIncident.summary ||
                   'Summary not available. AI is analyzing this incident.'}
               </p>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center py-4 text-slate-400">
-              <Sparkles size={24} className="mb-2 text-slate-300" />
+            <div className="flex flex-col items-center justify-center py-4 text-muted-foreground">
+              <Sparkles size={24} className="mb-2 text-secondary opacity-60" />
               <h2 className="text-sm font-bold">Select an incident to start</h2>
               <p className="text-xs font-medium">
                 RAG + Guardrails will restrict AI to that incident only
@@ -454,10 +451,10 @@ export default function ChatPage() {
                 <div
                   className={`w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0 ${
                     msg.type === 'guardrail'
-                      ? 'bg-amber-50 border-amber-200 text-amber-500'
+                      ? 'bg-primary/10 border-primary/20 text-primary'
                       : msg.type === 'error'
-                      ? 'bg-red-50 border-red-200 text-red-500'
-                      : 'bg-blue-100 border-blue-200 text-blue-600'
+                      ? 'bg-red-500/10 border-red-500/20 text-red-500'
+                      : 'bg-primary/10 border-primary/20 text-primary'
                   }`}
                 >
                   {msg.type === 'guardrail' ? (
@@ -473,19 +470,19 @@ export default function ChatPage() {
               <div
                 className={`max-w-[70%] break-words min-w-0 p-5 rounded-3xl text-sm ${
                   msg.role === 'user'
-                    ? 'bg-blue-600 text-white rounded-tr-none'
+                    ? 'bg-primary text-foreground rounded-tr-none'
                     : msg.type === 'guardrail'
-                    ? 'bg-amber-50 border border-amber-200 text-amber-800 rounded-tl-none shadow-sm'
+                    ? 'bg-primary/10 border border-primary/20 text-foreground rounded-tl-none shadow-sm'
                     : msg.type === 'error'
-                    ? 'bg-red-50 border border-red-200 text-red-700 rounded-tl-none shadow-sm'
-                    : 'bg-white border border-slate-100 text-slate-700 rounded-tl-none shadow-sm'
+                    ? 'bg-red-500/10 border border-red-500/20 text-foreground rounded-tl-none shadow-sm'
+                    : 'bg-card border border-border text-foreground rounded-tl-none shadow-sm'
                 }`}
               >
                 {/* Guardrail banner */}
                 {msg.type === 'guardrail' && (
-                  <div className="flex items-center gap-2 mb-2 pb-2 border-b border-amber-200">
-                    <ShieldAlert size={14} className="text-amber-500 flex-shrink-0" />
-                    <span className="text-[11px] font-black uppercase tracking-wider text-amber-600">
+                  <div className="flex items-center gap-2 mb-2 pb-2 border-b border-primary/20">
+                    <ShieldAlert size={14} className="text-primary flex-shrink-0" />
+                    <span className="text-[11px] font-black uppercase tracking-wider text-primary">
                       Guardrail Active — Off-Topic Question Blocked
                     </span>
                   </div>
@@ -495,13 +492,13 @@ export default function ChatPage() {
                   {msg.content}
                   {/* Streaming cursor */}
                   {msg.streaming && (
-                    <span className="inline-block w-0.5 h-4 bg-blue-500 ml-0.5 animate-pulse align-middle" />
+                    <span className="inline-block w-0.5 h-4 bg-primary ml-0.5 animate-pulse align-middle" />
                   )}
                 </div>
 
                 <div
                   className={`text-[10px] mt-2 font-medium ${
-                    msg.role === 'user' ? 'text-blue-100' : 'text-slate-400'
+                    msg.role === 'user' ? 'text-primary-foreground/80' : 'text-muted-foreground'
                   }`}
                 >
                   {msg.time}
@@ -509,7 +506,7 @@ export default function ChatPage() {
               </div>
 
               {msg.role === 'user' && (
-                <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 flex-shrink-0">
+                <div className="w-8 h-8 rounded-full bg-muted border border-border flex items-center justify-center text-muted-foreground flex-shrink-0">
                   <User size={16} />
                 </div>
               )}
@@ -519,14 +516,14 @@ export default function ChatPage() {
           {/* Streaming typing indicator */}
           {streaming && messages[messages.length - 1]?.content === '' && (
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-600 flex-shrink-0">
+              <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary flex-shrink-0">
                 <Bot size={16} />
               </div>
-              <div className="bg-white border border-slate-100 rounded-3xl rounded-tl-none p-5 shadow-sm">
+              <div className="bg-card border border-border rounded-3xl rounded-tl-none p-5 shadow-sm">
                 <div className="flex gap-1 items-center">
-                  <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             </div>
@@ -536,20 +533,20 @@ export default function ChatPage() {
         </div>
 
         {/* Input */}
-        <div className="p-6 bg-white border-t border-slate-100">
+        <div className="p-6 border-t border-border">
           {/* Guardrail hint */}
           {selectedIncident && (
             <div className="flex items-center gap-2 mb-3 px-1">
-              <Lock size={11} className="text-blue-400 flex-shrink-0" />
-              <p className="text-[11px] text-slate-400 font-medium truncate">
+              <Lock size={11} className="text-primary flex-shrink-0" />
+              <p className="text-[11px] text-muted-foreground font-medium truncate">
                 Restricted to:{' '}
-                <span className="text-blue-500 font-bold">{selectedIncident.title}</span>
+                <span className="text-primary font-bold">{selectedIncident.title}</span>
               </p>
             </div>
           )}
 
           <div
-            className={`relative flex items-end gap-3 bg-slate-50 border border-slate-200 rounded-2xl p-2 pl-4 shadow-sm focus-within:border-blue-500/50 transition-all ${
+            className={`relative flex items-end gap-3 bg-input border border-border rounded-2xl p-2 pl-4 shadow-sm focus-within:border-primary/50 transition-all ${
               !selectedIncident ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           >
@@ -569,7 +566,7 @@ export default function ChatPage() {
                   handleSend()
                 }
               }}
-              className="flex-1 text-sm font-medium outline-none text-slate-700 bg-transparent resize-none py-1.5 max-h-32 overflow-y-auto leading-relaxed"
+              className="flex-1 text-sm font-medium outline-none text-foreground bg-transparent resize-none py-1.5 max-h-32 overflow-y-auto leading-relaxed"
               disabled={!selectedIncident || streaming}
               style={{ minHeight: '24px' }}
             />
@@ -579,8 +576,8 @@ export default function ChatPage() {
               disabled={!selectedIncident || streaming || !input.trim()}
               className={`p-2.5 rounded-xl transition-colors shadow-lg flex-shrink-0 ${
                 selectedIncident && !streaming && input.trim()
-                  ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-900/20'
-                  : 'bg-slate-300 text-slate-500 cursor-not-allowed'
+                  ? 'bg-primary hover:bg-primary/90 text-primary-foreground'
+                  : 'bg-muted text-muted-foreground cursor-not-allowed'
               }`}
             >
               {streaming ? (
@@ -591,7 +588,7 @@ export default function ChatPage() {
             </button>
           </div>
 
-          <p className="text-[10px] text-center text-slate-400 mt-3 font-medium">
+          <p className="text-[10px] text-center text-muted-foreground mt-3 font-medium">
             🔒 RAG-powered · Guardrails active · Scoped to selected incident only
           </p>
         </div>

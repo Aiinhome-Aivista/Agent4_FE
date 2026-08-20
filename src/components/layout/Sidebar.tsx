@@ -21,19 +21,15 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-64 h-full flex flex-col" style={{
-      background: 'var(--bg-secondary)',
-      borderRight: '1px solid var(--border)',
-    }}>
+    <aside className="w-64 h-full flex flex-col bg-card border-r border-border">
       {/* Logo */}
-      <div className="h-14 px-6 flex items-center gap-3" style={{ borderBottom: '1px solid var(--border)' }}>
-        <div className="w-9 h-9 rounded-lg flex items-center justify-center"
-          style={{ background: 'linear-gradient(135deg, #3b82f6, #6366f1)' }}>
-          <ShieldAlert size={20} className="text-slate-900" />
+      <div className="h-14 px-6 flex items-center gap-3 border-b border-border">
+        <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary border border-border">
+          <ShieldAlert size={20} className="text-primary-foreground" />
         </div>
         <div>
-          <div className="font-semibold text-sm leading-tight" style={{ color: 'var(--text-primary)' }}>SLA Risk</div>
-          <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>Engine</div>
+          <div className="font-semibold text-sm leading-tight text-foreground">SLA Risk</div>
+          <div className="text-xs text-muted-foreground">Engine</div>
         </div>
       </div>
 
@@ -44,16 +40,11 @@ export default function Sidebar() {
             key={to}
             to={to}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
+              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all border ${
                 isActive
-                  ? 'text-slate-900 font-medium'
-                  : 'hover:bg-slate-50'
+                  ? 'bg-primary/10 text-primary border-primary/20 font-medium'
+                  : 'border-transparent text-muted-foreground hover:bg-secondary/10 hover:text-foreground'
               }`
-            }
-            style={({ isActive }) => isActive
-              ? { background: 'linear-gradient(135deg, rgba(59,130,246,0.2), rgba(99,102,241,0.1))',
-                  color: '#60a5fa', border: '1px solid rgba(59,130,246,0.25)' }
-              : { color: 'var(--text-secondary)' }
             }
           >
             <Icon size={17} />
@@ -63,11 +54,10 @@ export default function Sidebar() {
       </nav>
 
       {/* User info */}
-      <div className="p-2.5" style={{ borderTop: '1px solid var(--border)' }}>
+      <div className="m-4 border border-border rounded-[10px]">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors hover:bg-red-500/10"
-          style={{ color: '#f87171' }}
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors text-red-500 hover:bg-red-500/10"
         >
           <LogOut size={15} />
           Sign Out

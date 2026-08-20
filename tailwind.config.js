@@ -8,6 +8,17 @@ export default {
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       colors: {
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        card: 'var(--card)',
+        'card-foreground': 'var(--card-foreground)',
+        primary: 'var(--primary)',
+        'primary-hover': 'var(--primary-hover)',
+        secondary: 'var(--secondary)',
+        muted: 'var(--muted)',
+        'muted-foreground': 'var(--muted-foreground)',
+        border: 'var(--border)',
+        input: 'var(--input)',
         brand: {
           50:  '#eff6ff',
           100: '#dbeafe',

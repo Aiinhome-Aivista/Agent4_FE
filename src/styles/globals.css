@@ -4,42 +4,196 @@
 @tailwind utilities;
 
 :root {
-  --bg-primary:    #f8fafc;
-  --bg-secondary:  #f1f5f9;
-  --bg-card:       #ffffff;
-  --border:        #e2e8f0;
-  --text-primary:  #0f172a;
-  --text-secondary:#475569;
-  --accent-blue:   #3b82f6;
-  --risk-high:     #ef4444;
-  --risk-medium:   #f59e0b;
-  --risk-low:      #22c55e;
+  /* ==========================================
+     Centralized Brand Color Palette
+     ========================================== */
+  --primary-orange: #FF5A14;
+  --button-orange: #FF7A45;
+  --hover-orange: #F56B2F;
+  --sidebar-bg: #4A4A4A;
+  --light-bg: #FFFFFF;
+  --input-bg: #ffedf2;
+  --light-border: #D8D8D8;
+  --orange-border: #FF8A55;
+  --primary-text: #666666;
+  --secondary-text: #999999;
+  --placeholder-color: #B0B0B0;
+  --white: #FFFFFF;
+
+  /* RGB Values for Opacity & Glassmorphism Effects */
+  --primary-orange-rgb: 255, 90, 20;
+  --button-orange-rgb: 255, 122, 69;
+  --hover-orange-rgb: 245, 107, 47;
+  --sidebar-bg-rgb: 74, 74, 74;
+  --input-bg-rgb: 255, 247, 242;
+  --primary-text-rgb: 102, 102, 102;
+
+  /* ==========================================
+     Semantic Theme Variables (Mapped to Palette)
+     ========================================== */
+  --background: var(--input-bg);
+  --foreground: var(--primary-text);
+  --card: var(--white);
+  --card-foreground: var(--primary-text);
+  --popover: var(--white);
+  --popover-foreground: var(--primary-text);
+  --primary: var(--primary-orange);
+  --primary-hover: var(--hover-orange);
+  --primary-foreground: var(--white);
+  --secondary: var(--button-orange);
+  --secondary-badge: var(--secondary-text);
+  --secondary-foreground: var(--white);
+  --muted: var(--input-bg);
+  --muted-foreground: var(--secondary-text);
+  --border: var(--light-border);
+  --border-orange: var(--orange-border);
+  --input: var(--input-bg);
+  --ring: var(--primary-orange);
+  --sidebar: var(--sidebar-bg);
+  --placeholder: var(--placeholder-color);
+
+  /* ==========================================
+     Centralized Typography Tokens
+     ========================================== */
+  --font-family-heading: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-family-body: Helvetica, Arial, sans-serif;
+  --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  /* 1. Logo / Title ("DeepDcode") */
+  --typo-logo-title-font: var(--font-family-heading);
+  --typo-logo-title-size: 22px;
+  --typo-logo-title-weight: 700;
+
+  /* 2. Header Subtitle ("Know the system...") */
+  --typo-header-subtitle-font: var(--font-family-heading);
+  --typo-header-subtitle-size: 13px;
+  --typo-header-subtitle-weight: 400;
+
+  /* 3. Dropdown Label & Select Text ("Application type", "Please select") */
+  --typo-dropdown-font: var(--font-family-body);
+  --typo-dropdown-size: 14px;
+  --typo-dropdown-weight: 400;
+
+  /* 4. "GET INSIGHT" Button */
+  --typo-btn-get-insight-font: var(--font-family-body);
+  --typo-btn-get-insight-size: 14px;
+  --typo-btn-get-insight-weight: 700;
+
+  /* 5. Main Heading ("Get insight from the project repository!") */
+  --typo-main-heading-font: var(--font-family-heading);
+  --typo-main-heading-size: 22px;
+  --typo-main-heading-weight: 400;
+
+  /* 6. Middle Instruction Text ("Please select a application type...") */
+  --typo-instruction-font: var(--font-family-body);
+  --typo-instruction-size: 17px;
+  --typo-instruction-weight: 400;
+
+  /* 7. Example Question Pills ("What is PMO Portal?") */
+  --typo-question-pill-font: var(--font-family-body);
+  --typo-question-pill-size: 13px;
+  --typo-question-pill-weight: 400;
+
+  /* 8. Chat Input Box Text ("Type your question here...") */
+  --typo-chat-input-font: var(--font-family-body);
+  --typo-chat-input-size: 15px;
+  --typo-chat-input-weight: 400;
+
+  /* 9. Footer Text ("Powered by PwC...") */
+  --typo-footer-font: var(--font-family-body);
+  --typo-footer-size: 11px;
+  --typo-footer-weight: 400;
+
+  /* Geometry & Shadows */
+  --radius: 0.75rem;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.dark {
+  /* Dark Theme Variable Overrides */
+  --background: #1e1e1e;
+  --foreground: #e0e0e0;
+  --secondary-text: #e0e0e0;
+  --card: #2a2a2a;
+  --card-foreground: #ffffff;
+  --popover: #2a2a2a;
+  --popover-foreground: #ffffff;
+  --primary: var(--primary-orange);
+  --primary-hover: var(--hover-orange);
+  --primary-foreground: var(--white);
+  --secondary: var(--button-orange);
+  --secondary-badge: #7e7e7e80;
+  --secondary-foreground: var(--white);
+  --muted: #333333;
+  --muted-foreground: var(--secondary-text);
+  --border: #444444;
+  --border-orange: var(--orange-border);
+  --input: #2a2a2a;
+  --ring: var(--primary-orange);
+  --sidebar: #2b2b2b;
+}
+
+@theme {
+  /* Semantic Mappings for Tailwind CSS */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-badge: var(--secondary-badge);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Explicit Brand Palette Utilities for Tailwind CSS */
+  --color-primary-orange: #FF5A14;
+  --color-button-orange: #FF7A45;
+  --color-hover-orange: #F56B2F;
+  --color-sidebar: #4A4A4A;
+  --color-light-bg: #FFFFFF;
+  --color-input-bg: #FFF7F2;
+  --color-light-border: #D8D8D8;
+  --color-orange-border: #FF8A55;
+  --color-primary-text: #666666;
+  --color-secondary-text: #888888;
+  --color-placeholder: #B0B0B0;
+  --color-white: #FFFFFF;
+
+  --font-heading: var(--font-family-heading);
+  --font-body: var(--font-family-body);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
+  font-family: var(--font-family-body);
+  background: var(--background);
+  color: var(--foreground);
   min-height: 100vh;
 }
 
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-track { background: var(--muted); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-.risk-high   { color: var(--risk-high); }
-.risk-medium { color: var(--risk-medium); }
-.risk-low    { color: var(--risk-low); }
-
-.badge-high   { background: rgba(239,68,68,0.15);  color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
-.badge-medium { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
-.badge-low    { background: rgba(34,197,94,0.15);  color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
-
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
+.badge-primary {
+  background: rgba(var(--primary-orange-rgb), 0.063);
+  border: 1px solid rgba(var(--primary-orange-rgb), 0.125);
+  color: var(--primary-orange);
 }
