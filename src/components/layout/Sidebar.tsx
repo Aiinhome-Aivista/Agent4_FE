@@ -40,10 +40,10 @@ export default function Sidebar() {
             key={to}
             to={to}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all border ${
+              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
                 isActive
-                  ? 'bg-primary/20 text-white border-primary/30 font-medium'
-                  : 'border-transparent text-gray-300 hover:bg-white/10 hover:text-white'
+                  ? 'bg-[#FF5A14]/20 text-[#FF5A14] font-medium'
+                  : 'text-gray-300 hover:bg-[#FF5A14]/20 hover:text-[#FF5A14]'
               }`
             }
           >

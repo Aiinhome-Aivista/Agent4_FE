@@ -9,7 +9,7 @@
      ========================================== */
   --primary-orange: #FF5A14;
   --button-orange: #FF7A45;
-  --hover-orange: #F56B2F;
+  --primary-orange: #FF5A14;
   --sidebar-bg: #4A4A4A;
   --light-bg: #FFFFFF;
   --input-bg: #FFF7F2;
@@ -179,7 +179,11 @@
   --animate-accordion-up: accordion-up 0.2s ease-out;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   font-family: var(--font-family-body);
@@ -188,9 +192,18 @@ body {
   min-height: 100vh;
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--muted); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
 
 .badge-primary {
   background: rgba(var(--primary-orange-rgb), 0.063);
