@@ -60,24 +60,24 @@ export default function RunbooksPage() {
   });
 
   return (
-    <div className="p-8 max-w-[1600px] mx-auto" style={{ background: '#f8fafc', fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="p-8 max-w-[1600px] mx-auto min-h-screen bg-background font-display">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <Book size={32} className="text-slate-900" />
-            <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">
+            <Book size={32} className="text-foreground" />
+            <h1 className="text-4xl font-extrabold text-foreground tracking-tight">
               Knowledge Base
             </h1>
           </div>
-          <p className="text-sm text-slate-500 font-medium">
+          <p className="text-sm text-muted-foreground font-medium">
             Upload PDF/DOCX articles · stored locally · indexed into the RAG vector store
           </p>
         </div>
 
         <button 
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-2 px-6 py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-bold transition-all shadow-xl shadow-blue-900/20 text-sm"
+          className="flex items-center gap-2 px-6 py-3.5 bg-secondary hover:bg-primary text-foreground rounded-2xl font-bold transition-all shadow-xl text-sm"
         >
           <Upload size={18} />
           UPLOAD ARTICLE
@@ -89,56 +89,56 @@ export default function RunbooksPage() {
       {/* Search & Filters */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div className="relative flex-1 max-w-lg">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
           <input
             type="text"
             placeholder="Search runbooks, tags, or descriptions..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-6 py-3.5 rounded-2xl text-sm font-medium outline-none border border-slate-200 focus:border-blue-500/50 transition-all bg-white shadow-sm"
+            className="w-full pl-12 pr-6 py-3.5 rounded-2xl text-sm font-medium outline-none border border-border focus:border-primary/50 transition-all bg-input text-foreground shadow-sm"
           />
         </div>
       </div>
 
       {/* Table */}
-      <div className="rounded-3xl border bg-white shadow-sm overflow-hidden" style={{ borderColor: 'rgba(0, 0, 0, 0.05)' }}>
+      <div className="rounded-3xl border border-border bg-card shadow-sm overflow-hidden">
         {loading ? (
           <div className="flex flex-col items-center justify-center h-64 gap-4">
-            <Loader2 size={32} className="animate-spin text-blue-500" />
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Loading documents...</p>
+            <Loader2 size={32} className="animate-spin text-primary" />
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Loading documents...</p>
           </div>
         ) : (
           <div className="overflow-x-auto overflow-y-auto max-h-[calc(90vh-300px)] min-h-[350px]">
             <table className="w-full text-left relative">
               <thead className="sticky top-0 z-10 shadow-sm">
-                <tr style={{ background: '#f8fafc' }}>
+                <tr className="bg-muted">
                   {['FILENAME', 'FILE TYPE', 'UPLOADED AT', 'ACTIONS'].map(h => (
-                    <th key={h} className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-500">
+                    <th key={h} className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-border">
                 {filteredDocuments.map((doc, idx) => (
-                  <tr key={doc.id || idx} className="hover:bg-slate-50/50 transition-colors">
+                  <tr key={doc.id || idx} className="hover:bg-muted/50 transition-colors">
                     <td className="px-6 py-5 max-w-xs">
                       <div className="flex items-start gap-3 w-full min-w-0">
-                        <span className="w-8 h-8 rounded-lg flex items-center justify-center bg-blue-50 text-blue-500 flex-shrink-0 mt-0.5">
+                        <span className="w-8 h-8 rounded-lg flex items-center justify-center bg-primary/10 text-primary flex-shrink-0 mt-0.5">
                           <FileText size={16} />
                         </span>
                         <div className="min-w-0 flex-1">
-                          <p className="text-sm font-bold text-slate-900 truncate" title={doc.filename}>{doc.filename || 'Unknown'}</p>
+                          <p className="text-sm font-bold text-foreground truncate" title={doc.filename}>{doc.filename || 'Unknown'}</p>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-5">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-slate-700 px-2.5 py-1 rounded-md bg-slate-100">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-foreground px-2.5 py-1 rounded-md bg-muted">
                         {doc.file_type || 'N/A'}
                       </span>
                     </td>
                     <td className="px-6 py-5">
-                      <span className="text-xs font-bold text-slate-500">
+                      <span className="text-xs font-bold text-muted-foreground">
                         {doc.uploaded_at ? new Date(doc.uploaded_at).toLocaleString() : 'N/A'}
                       </span>
                     </td>
@@ -149,7 +149,7 @@ export default function RunbooksPage() {
                       <div className="flex items-center gap-2">
                         <button 
                           onClick={() => setSelectedDocument(doc)}
-                          className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-slate-500 hover:text-blue-500"
+                          className="p-2 hover:bg-secondary/10 rounded-lg transition-colors text-muted-foreground hover:text-primary"
                           title="View Details"
                         >
                           <Eye size={16} />
@@ -163,7 +163,7 @@ export default function RunbooksPage() {
                 ))}
                 {filteredDocuments.length === 0 && !loading && (
                   <tr>
-                    <td colSpan={5} className="px-6 py-12 text-center text-sm font-medium text-slate-500">
+                    <td colSpan={5} className="px-6 py-12 text-center text-sm font-medium text-muted-foreground">
                       No documents found matching your search.
                     </td>
                   </tr>
@@ -177,34 +177,34 @@ export default function RunbooksPage() {
       {/* Upload Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center">
-          <div className="bg-white rounded-[32px] w-full max-w-lg p-8 shadow-2xl border" style={{ borderColor: 'rgba(0, 0, 0, 0.05)' }}>
+          <div className="bg-background rounded-[32px] w-full max-w-lg p-8 shadow-2xl border border-border">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <span className="w-10 h-10 rounded-2xl flex items-center justify-center bg-blue-500/10 border border-blue-500/20 text-blue-400">
+                <span className="w-10 h-10 rounded-2xl flex items-center justify-center bg-primary/10 border border-primary/20 text-primary">
                   <Upload size={20} />
                 </span>
-                <h3 className="text-xl font-bold text-slate-900">Upload Article</h3>
+                <h3 className="text-xl font-bold text-foreground">Upload Article</h3>
               </div>
-              <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-slate-100 rounded-xl transition-colors">
-                <span className="text-slate-500 text-sm">✕</span>
+              <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-secondary/10 rounded-xl transition-colors">
+                <span className="text-muted-foreground text-sm">✕</span>
               </button>
             </div>
 
-            <p className="text-sm text-slate-500 mb-6">
+            <p className="text-sm text-muted-foreground mb-6">
               Supported formats: <strong>PDF, DOCX</strong>. Max file size: <strong>20 MB</strong>.
             </p>
 
-            <div className="border-2 border-dashed border-slate-200 rounded-2xl p-8 flex flex-col items-center justify-center gap-4 bg-slate-50/50 hover:bg-slate-50 transition-colors cursor-pointer"
+            <div className="border-2 border-dashed border-border rounded-2xl p-8 flex flex-col items-center justify-center gap-4 bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
               onClick={() => document.getElementById('file-upload')?.click()}
             >
-              <Upload size={32} className="text-slate-400" />
+              <Upload size={32} className="text-muted-foreground" />
               <div className="text-center">
                 {selectedFile ? (
-                  <p className="text-sm font-bold text-blue-600">{selectedFile.name}</p>
+                  <p className="text-sm font-bold text-primary">{selectedFile.name}</p>
                 ) : (
                   <>
-                    <p className="text-sm font-bold text-slate-900">Click to upload or drag and drop</p>
-                    <p className="text-xs text-slate-500 mt-1">or select a file from your computer</p>
+                    <p className="text-sm font-bold text-foreground">Click to upload or drag and drop</p>
+                    <p className="text-xs text-muted-foreground mt-1">or select a file from your computer</p>
                   </>
                 )}
               </div>
@@ -230,7 +230,7 @@ export default function RunbooksPage() {
             <div className="flex items-center justify-end gap-3 mt-6">
               <button 
                 onClick={() => { setIsModalOpen(false); setSelectedFile(null); }} 
-                className="px-5 py-2.5 rounded-xl text-xs font-black uppercase text-slate-600 hover:bg-slate-100 transition-colors"
+                className="px-5 py-2.5 rounded-xl text-xs font-black uppercase text-muted-foreground hover:bg-secondary/10 transition-colors"
                 disabled={uploading}
               >
                 Cancel
@@ -253,29 +253,29 @@ export default function RunbooksPage() {
       {selectedDocument && (
         <>
           <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" onClick={() => setSelectedDocument(null)} />
-          <div className="fixed inset-y-0 right-0 w-[500px] bg-white shadow-2xl z-50 transform transition-transform duration-500 overflow-y-auto translate-x-0">
+          <div className="fixed inset-y-0 right-0 w-[500px] bg-background border-l border-border shadow-2xl z-50 transform transition-transform duration-500 overflow-y-auto translate-x-0">
             <div className="p-8">
               {/* Header */}
               <div className="flex items-start justify-between mb-8">
                 <div className="flex items-center gap-4 min-w-0 flex-1">
-                  <span className="w-12 h-12 rounded-2xl flex items-center justify-center bg-blue-50 text-blue-500 flex-shrink-0">
+                  <span className="w-12 h-12 rounded-2xl flex items-center justify-center bg-primary/10 text-primary flex-shrink-0">
                     <FileText size={24} />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <h2 className="text-xl font-extrabold text-slate-900 truncate pr-4" title={selectedDocument.filename}>{selectedDocument.filename}</h2>
-                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">ID: {selectedDocument.id || 'N/A'}</p>
+                    <h2 className="text-xl font-extrabold text-foreground truncate pr-4" title={selectedDocument.filename}>{selectedDocument.filename}</h2>
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mt-1">ID: {selectedDocument.id || 'N/A'}</p>
                   </div>
                 </div>
-                <button onClick={() => setSelectedDocument(null)} className="p-2 hover:bg-slate-100 rounded-xl transition-colors">
-                  <span className="text-slate-500 text-sm">✕</span>
+                <button onClick={() => setSelectedDocument(null)} className="p-2 hover:bg-secondary/10 rounded-xl transition-colors">
+                  <span className="text-muted-foreground text-sm">✕</span>
                 </button>
               </div>
 
               {/* Details List */}
               <div className="space-y-6">
                 <div>
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5"> Summary</p>
-                  <div className="text-sm text-slate-600 bg-slate-50 p-4 rounded-2xl border border-slate-100 leading-relaxed whitespace-pre-wrap">
+                  <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1.5"> Summary</p>
+                  <div className="text-sm text-muted-foreground bg-muted p-4 rounded-2xl border border-border leading-relaxed whitespace-pre-wrap">
                     {selectedDocument.raw_summary || 'No summary available for this document.'}
                   </div>
                 </div>

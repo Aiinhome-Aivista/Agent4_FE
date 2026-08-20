@@ -10,7 +10,7 @@ export default function AppLayout() {
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header />
-        <main className="flex-1 overflow-y-auto" style={{ background: 'var(--bg-primary)' }}>
+        <main className="flex-1 overflow-y-auto" style={{ background: 'var(--background)' }}>
           <Outlet />
         </main>
         <Footer />

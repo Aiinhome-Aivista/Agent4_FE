@@ -15,7 +15,7 @@ import ChatPage from '../pages/Chat/ChatPage'
 function PageLoader() {
   return (
     <div className="flex items-center justify-center h-64">
-      <Loader2 size={28} className="animate-spin" style={{ color: '#3b82f6' }} />
+      <Loader2 size={28} className="animate-spin text-primary" />
     </div>
   )
 }

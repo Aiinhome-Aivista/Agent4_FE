@@ -116,20 +116,15 @@ export default function DashboardPage() {
   ] : []
 
   return (
-    <div className="p-8 max-w-[1600px] mx-auto min-h-screen" style={{ background: '#f8fafc', fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="p-8 max-w-[1600px] mx-auto min-h-screen bg-background font-display">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 sticky top-0 bg-[#f8fafc] z-10 -mx-8 px-8 py-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 sticky top-0 bg-background z-10 -mx-8 px-8 py-4">
         <div>
-          <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-            Risk Intelligence <span style={{ color: '#3b82f6' }}>Command Center</span>
+          <h1 className="text-4xl font-extrabold text-foreground tracking-tight mb-2">
+            Risk Intelligence <span className="text-primary">Command Center</span>
           </h1>
-          <div className="flex items-center gap-4" style={{ color: '#94a3b8' }}>
-            <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-all duration-500 ${error || isFallback ? 'animate-pulse' : ''}`}
-              style={{ 
-                background: error ? 'rgba(239, 68, 68, 0.1)' : isFallback ? 'rgba(245, 158, 11, 0.1)' : 'rgba(34, 197, 94, 0.1)', 
-                border: `1px solid ${error ? 'rgba(239, 68, 68, 0.2)' : isFallback ? 'rgba(245, 158, 11, 0.2)' : 'rgba(34, 197, 94, 0.2)'}`,
-                color: error ? '#f87171' : isFallback ? '#f59e0b' : '#22c55e'
-              }}>
+          <div className="flex items-center gap-4 text-muted-foreground">
+            <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-all duration-500 border ${error || isFallback ? 'animate-pulse' : ''} ${error ? 'bg-red-500/10 border-red-500/20 text-red-500' : isFallback ? 'bg-amber-500/10 border-amber-500/20 text-amber-500' : 'bg-green-500/10 border-green-500/20 text-green-500'}`}>
               <div className={`w-1.5 h-1.5 rounded-full ${error ? 'bg-red-500' : isFallback ? 'bg-amber-500' : 'bg-green-500'}`} />
               {error ? 'Connection Error' : isFallback ? 'Intelligence Mode Active' : 'Live Synchronization Active'}
             </div>
@@ -139,8 +134,7 @@ export default function DashboardPage() {
 
         <div className="flex items-center gap-3">
           <button onClick={load} disabled={loading}
-            className="flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold transition-all disabled:opacity-50"
-            style={{ background: 'rgba(59,130,246,0.1)', color: '#60a5fa', border: '1px solid rgba(59,130,246,0.2)' }}>
+            className="flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold text-foreground bg-secondary hover:bg-primary transition-all disabled:opacity-50">
             {loading ? <Loader2 size={16} className="animate-spin" /> : <RefreshCw size={16} />}
             Force Sync
           </button>
@@ -149,7 +143,7 @@ export default function DashboardPage() {
 
       <div className="space-y-8">
         {error && (
-          <div className="p-6 rounded-[32px] border text-center" style={{ background: 'rgba(239, 68, 68, 0.1)', borderColor: 'rgba(239, 68, 68, 0.2)', color: '#f87171' }}>
+          <div className="p-6 rounded-[32px] border text-center bg-red-500/10 border-red-500/20 text-red-500">
             <p className="font-bold text-lg">An Error Occurred</p>
             <p className="text-sm text-red-400">{error}</p>
           </div>
@@ -162,25 +156,21 @@ export default function DashboardPage() {
             { label: 'Stable Systems', value: stats?.low_risk ?? 0, icon: ShieldCheck, color: '#22c55e', trend: 'Optimal' },
             { label: 'Avg Risk Score', value: stats?.avg_risk_score?.toFixed(1) ?? '0', icon: TrendingUp, color: '#f59e0b', trend: '-2.4%' }
           ].map((stat, i) => (
-            <div key={i} className="p-6 rounded-[32px] border relative overflow-hidden group hover:scale-[1.02] transition-all duration-500"
-              style={{ 
-                background: 'rgba(255, 255, 255, 0.8)', 
-                backdropFilter: 'blur(16px)',
-                borderColor: 'rgba(0, 0, 0, 0.05)'
-              }}>
-              <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                <stat.icon size={80} style={{ color: stat.color }} />
+            <div key={i} className="p-4 rounded-[20px] border relative overflow-hidden group hover:scale-[1.02] transition-all duration-500 bg-card/80 backdrop-blur-[16px] border-border"
+              style={{ '--stat-color': stat.color } as React.CSSProperties}>
+              <div className="absolute bottom-8 right-2 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+                <stat.icon size={80} className="text-[color:var(--stat-color)]" />
               </div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-2xl flex items-center justify-center" 
-                  style={{ background: `${stat.color}15`, border: `1px solid ${stat.color}30` }}>
-                  <stat.icon size={20} style={{ color: stat.color }} />
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center border border-[color:var(--stat-color-alpha-30)] bg-[color:var(--stat-color-alpha-15)]" 
+                  style={{ '--stat-color-alpha-15': `${stat.color}15`, '--stat-color-alpha-30': `${stat.color}30` } as React.CSSProperties}>
+                  <stat.icon size={20} className="text-[color:var(--stat-color)]" />
                 </div>
-                <span className="text-xs font-black uppercase tracking-widest text-slate-500">{stat.label}</span>
+                <span className="text-xs font-black uppercase tracking-widest text-muted-foreground">{stat.label}</span>
               </div>
               <div className="flex items-end justify-between">
-                <h3 className="text-4xl font-extrabold text-slate-900 tracking-tight">{stat.value}</h3>
-                <span className="text-[10px] font-black px-2 py-1 rounded-lg" style={{ background: `${stat.color}10`, color: stat.color }}>{stat.trend}</span>
+                <h3 className="text-4xl font-extrabold text-foreground tracking-tight">{stat.value}</h3>
+                <span className="text-[10px] font-black px-2 py-1 rounded-lg bg-[color:var(--stat-color-alpha-10)] text-[color:var(--stat-color)]" style={{ '--stat-color-alpha-10': `${stat.color}10` } as React.CSSProperties}>{stat.trend}</span>
               </div>
             </div>
           ))}
@@ -188,13 +178,12 @@ export default function DashboardPage() {
 
         {/* Visualization Row */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="p-8 rounded-[40px] border shadow-2xl"
-            style={{ background: 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(20px)', borderColor: 'rgba(0, 0, 0, 0.05)' }}>
+          <div className="p-8 rounded-[20px] border shadow-2xl bg-card/80 backdrop-blur-[20px] border-border">
             <div className="flex items-center justify-between mb-8">
-              <h3 className="text-lg font-bold text-slate-900 uppercase tracking-tighter">Risk Segmentation</h3>
-              <Zap size={18} style={{ color: '#f59e0b' }} />
+              <h3 className="text-lg font-bold text-foreground uppercase tracking-tighter">Risk Segmentation</h3>
+              <Zap size={18} className="text-amber-500" />
             </div>
-            <div className="h-[240px] w-full">
+            <div className="h-[240px] w-full text-foreground">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie data={pieData} cx="50%" cy="50%" innerRadius={70} outerRadius={100}
@@ -204,38 +193,38 @@ export default function DashboardPage() {
                     ))}
                   </Pie>
                   <Tooltip 
-                    contentStyle={{ background: '#ffffff', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '16px' }}
-                    itemStyle={{ color: '#0f172a', fontSize: '12px' }}
+                    contentStyle={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '16px' }}
+                    itemStyle={{ color: 'var(--foreground)', fontSize: '12px' }}
                   />
                 </PieChart>
               </ResponsiveContainer>
             </div>
             <div className="grid grid-cols-3 gap-2 mt-4">
               {pieData.map((d, i) => (
-                <div key={i} className="text-center">
-                  <p className="text-[10px] font-black text-slate-500 uppercase">{d.name}</p>
-                  <p className="text-sm font-bold" style={{ color: PIE_COLORS[d.name as keyof typeof PIE_COLORS] }}>{d.value}</p>
+                <div key={i} className="text-center" style={{ '--pie-color': PIE_COLORS[d.name as keyof typeof PIE_COLORS] } as React.CSSProperties}>
+                  <p className="text-[10px] font-black text-muted-foreground uppercase">{d.name}</p>
+                  <p className="text-sm font-bold text-[color:var(--pie-color)]">{d.value}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="lg:col-span-2 p-8 rounded-[40px] border shadow-2xl"
-            style={{ background: 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(20px)', borderColor: 'rgba(0, 0, 0, 0.05)' }}>
+          <div className="lg:col-span-2 p-8 rounded-[20px] border shadow-2xl bg-card/80 backdrop-blur-[20px] border-border">
             <div className="flex items-center justify-between mb-8">
-              <h3 className="text-lg font-bold text-slate-900 uppercase tracking-tighter">Source Distribution</h3>
-              <TrendingUp size={18} style={{ color: '#3b82f6' }} />
+              <h3 className="text-lg font-bold text-foreground uppercase tracking-tighter">Source Distribution</h3>
+              <TrendingUp size={18} className="text-primary" />
             </div>
             <div className="h-[300px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={bySource}>
-                  <XAxis dataKey="source" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 10, fontWeight: 'bold' }} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 10, fontWeight: 'bold' }} />
+                  <XAxis dataKey="source" axisLine={false} tickLine={false} tick={{ fill: 'var(--muted-foreground)', fontSize: 10, fontWeight: 'bold' }} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: 'var(--muted-foreground)', fontSize: 10, fontWeight: 'bold' }} />
                   <Tooltip 
-                    cursor={{ fill: 'rgba(0,0,0,0.03)' }}
-                    contentStyle={{ background: '#ffffff', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '16px' }}
+                    cursor={{ fill: 'var(--muted)', opacity: 0.5 }}
+                    contentStyle={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '16px' }}
+                    itemStyle={{ color: 'var(--foreground)', fontSize: '12px' }}
                   />
-                  <Bar dataKey="count" fill="#3b82f6" radius={[12, 12, 4, 4]} barSize={40} />
+                  <Bar dataKey="count" fill="var(--primary)" radius={[12, 12, 4, 4]} barSize={40} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -243,28 +232,26 @@ export default function DashboardPage() {
         </div>
 
         {/* Table Card */}
-        <div className="rounded-[40px] border shadow-2xl overflow-hidden"
-          style={{ background: 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(20px)', borderColor: 'rgba(0, 0, 0, 0.05)' }}>
-          <div className="p-8 border-b flex items-center justify-between" style={{ borderColor: 'rgba(0, 0, 0, 0.05)' }}>
-            <h3 className="text-lg font-bold text-slate-900 tracking-tighter">Critical Priority Alerts</h3>
+        <div className="rounded-[20px] border shadow-2xl overflow-hidden bg-card/80 backdrop-blur-[20px] border-border">
+          <div className="p-8 border-b border-border flex items-center justify-between">
+            <h3 className="text-lg font-bold text-foreground tracking-tighter">Critical Priority Alerts</h3>
             <span className="text-[10px] font-black px-3 py-1 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 uppercase tracking-widest">High Impact</span>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
-                <tr style={{ background: 'rgba(241, 245, 249, 0.5)' }}>
+                <tr className="bg-muted/50">
                   {['Title', 'Source', 'Risk Level', 'Risk Score', 'Priority'].map(h => (
-                    <th key={h} className="px-8 py-5 text-[10px] font-black uppercase tracking-widest" style={{ color: '#64748b' }}>{h}</th>
+                    <th key={h} className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-muted-foreground">{h}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y" style={{ borderColor: 'rgba(0, 0, 0, 0.05)' }}>
+              <tbody className="divide-y border-border divide-border">
                 {topRisk.map((inc) => (
-                  <tr key={inc.ticket_id} className="transition-all duration-300 group hover:bg-slate-50">
+                  <tr key={inc.ticket_id} className="transition-all duration-300 group hover:bg-muted/50">
                     <td className="px-8 py-6">
                       <div className="flex flex-col gap-1">
-                        {/* <span className="font-mono text-xs font-black text-blue-500">{inc.ticket_id}</span> */}
-                        <span className="text-sm font-bold text-slate-800 leading-snug">{inc.title}</span>
+                        <span className="text-sm font-bold text-foreground leading-snug">{inc.title}</span>
                       </div>
                     </td>
                     {/* <td className="px-8 py-6">
@@ -284,17 +271,17 @@ export default function DashboardPage() {
                     </td>
                     <td className="px-8 py-6">
                       <div className="flex items-end gap-1">
-                        <span className="text-xl font-black text-slate-900">{inc.risk_score?.toFixed(0)}</span>
-                        <span className="text-[10px] font-black text-slate-500 mb-1">%</span>
+                        <span className="text-xl font-black text-foreground">{inc.risk_score?.toFixed(0)}</span>
+                        <span className="text-[10px] font-black text-muted-foreground mb-1">%</span>
                       </div>
                     </td>
                     <td className="px-8 py-6">
-                      <span className="text-[10px] font-black uppercase px-3 py-1.5 rounded-xl transition-all inline-block" 
+                      <span className="text-[10px] font-black uppercase px-3 py-1.5 rounded-xl transition-all inline-block border-[color:var(--prio-color-alpha-30)] text-[color:var(--prio-color)] bg-[color:var(--prio-color-alpha-15)] border" 
                         style={{ 
-                          background: `${PRIORITY_COLOR[inc.priority || ''] || '#94a3b8'}15`, 
-                          color: PRIORITY_COLOR[inc.priority || ''] || '#94a3b8',
-                          border: `1px solid ${PRIORITY_COLOR[inc.priority || ''] || '#94a3b8'}30`
-                        }}>
+                          '--prio-color': PRIORITY_COLOR[inc.priority || ''] || '#94a3b8',
+                          '--prio-color-alpha-15': `${PRIORITY_COLOR[inc.priority || ''] || '#94a3b8'}15`,
+                          '--prio-color-alpha-30': `${PRIORITY_COLOR[inc.priority || ''] || '#94a3b8'}30`,
+                        } as React.CSSProperties}>
                         {inc.priority}
                       </span>
                     </td>
