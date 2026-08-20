@@ -21,15 +21,15 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-64 h-full flex flex-col bg-card border-r border-border">
+    <aside className="w-64 h-full flex flex-col bg-sidebar border-r border-border">
       {/* Logo */}
       <div className="h-14 px-6 flex items-center gap-3 border-b border-border">
         <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary border border-border">
           <ShieldAlert size={20} className="text-primary-foreground" />
         </div>
         <div>
-          <div className="font-semibold text-sm leading-tight text-foreground">SLA Risk</div>
-          <div className="text-xs text-muted-foreground">Engine</div>
+          <div className="font-semibold text-sm leading-tight text-white">SLA Risk</div>
+          <div className="text-xs text-gray-300">Engine</div>
         </div>
       </div>
 
@@ -42,8 +42,8 @@ export default function Sidebar() {
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all border ${
                 isActive
-                  ? 'bg-primary/10 text-primary border-primary/20 font-medium'
-                  : 'border-transparent text-muted-foreground hover:bg-secondary/10 hover:text-foreground'
+                  ? 'bg-primary/20 text-white border-primary/30 font-medium'
+                  : 'border-transparent text-gray-300 hover:bg-white/10 hover:text-white'
               }`
             }
           >

@@ -19,6 +19,7 @@ export default {
         'muted-foreground': 'var(--muted-foreground)',
         border: 'var(--border)',
         input: 'var(--input)',
+        sidebar: 'var(--sidebar)',
         brand: {
           50:  '#eff6ff',
           100: '#dbeafe',
